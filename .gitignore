@@ -1,0 +1,4 @@
+# Données et fichiers générés
+*.dat
+*.wav
+.ipynb_checkpoints/

@@ -1,37 +1,44 @@
-README FILE: A good project idea is to build a model that can classify the genre of music using neural networks. We would need to extract information from the audio samples such as spectrograms, MFCC, etc. and then use a model to classify the music genre. This model can be used to automatically classify the music genre.
+# Music Genre Classification 🎵
 
-Music Genre Classification – Automatically classify different musical genres:
-In this tutorial we are going to develop a deep learning project to automatically classify different musical genres from audio files. We will classify these audio files using their low-level features of frequency and time domain.
-For this project we need a dataset of audio tracks having similar size and similar frequency range. GTZAN genre classification dataset is the most recommended dataset for the music genre classification project and it was collected for this task only.
+School AI project (ENIS, 2023): predicting the genre of a music track from its audio, using MFCC features and a K-Nearest Neighbours classifier.
 
-About the dataset:
-The GTZAN genre collection dataset was collected in 2000-2001. It consists of 1000 audio files each having 30 seconds duration. There are 10 classes ( 10 music genres) each containing 100 audio tracks. Each track is in .wav format. It contains audio files of the following 10 genres:
-- Blues
-- Classical
-- Country
-- Disco
-- Hiphop
-- Jazz
-- Metal
-- Pop
-- Reggae
-- Rock
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
+![Google Colab](https://img.shields.io/badge/Google%20Colab-F9AB00?style=flat-square&logo=googlecolab&logoColor=black)
 
-There are various methods to perform classification on this dataset. Some of these approaches are:
-Multiclass support vector machines
-K-means clustering
-K-nearest neighbors
-Convolutional neural networks
+## Result
 
-We will use K-nearest neighbors algorithm because in various researches it has shown the best results for this problem.
-K-Nearest Neighbors is a popular machine learning algorithm for regression and classification. It makes predictions on data points based on their similarity 
-measures i.e distance between them.
+**64.8 % accuracy** on the test set (K = 5, random 66 / 34 train–test split) across 10 genres:
+blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae, rock.
 
-Steps to build Music Genre Classification:
-1. Imports
-2. Define a function to get the distance between feature vectors and find neighbors
-3. Identify the nearest neighbors
-4. Define a function for model evaluation
-5. Extract features from the dataset and dump these features into a binary .dat file “my.dat”
-6. Train and test split on the dataset
-7. Make prediction using KNN and get the accuracy on test data
+## How it works
+
+1. **Dataset** — [GTZAN](https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification): 1,000 tracks of 30 seconds, 100 per genre.
+2. **Features** — for each track, MFCCs are extracted with `python_speech_features`; the track is summarised by the **mean vector** and **covariance matrix** of its MFCCs.
+3. **Distance** — two tracks are compared with a distance between their MFCC distributions (mean + covariance).
+4. **Classification** — K-Nearest Neighbours with a majority vote among the 5 closest tracks.
+
+## Notebooks
+
+| Notebook | Purpose |
+|---|---|
+| `train_knn.ipynb` | Extracts features from GTZAN into `my.dat`, splits train / test, evaluates the classifier |
+| `predict.ipynb` | Loads `my.dat` and predicts the genre of a new `.wav` file |
+
+## Run it
+
+The notebooks were written for Google Colab.
+
+1. Download GTZAN and put `genres_original/` in your Google Drive.
+2. Update the Drive paths at the top of `train_knn.ipynb`, run it to generate `my.dat`.
+3. Run `predict.ipynb` on any `.wav` file.
+
+## Possible improvements
+
+- Stratified split and cross-validation for a more stable score
+- Compare with an SVM or a CNN on mel-spectrograms, which usually score higher on GTZAN
+
+## Author
+
+**Hadil Ben Rhouma** — [Portfolio](https://portfilio-gules-three.vercel.app/?utm_source=github) · [LinkedIn](https://www.linkedin.com/in/hadil-benrhouma/)
